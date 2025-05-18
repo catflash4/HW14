@@ -33,5 +33,7 @@ public class App {
         System.out.println(basket.getTotalPrice() + " руб.");
 
         System.out.println(basket.checkProductByName("Шоколад Алёнка"));
+
+        System.out.println(basket.checkProductByName("Чипсы Lays"));
     }
 }
