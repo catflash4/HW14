@@ -5,11 +5,28 @@ import org.skypro.skyshop.searchable.Searchable;
 public abstract class Product implements Searchable {
     protected String name;
 
-    Product(String name) {
-        this.name = name;
+    Product(String name) throws RuntimeException {
+        try {
+            checkName(name);
+        } catch (NullPointerException n) {
+            System.out.println("Была переданна null");
+            name = "NULL";
+        } catch (RuntimeException e) {
+            System.out.println("Была переданная пустота");
+            name = "Пустота";
+        } finally {
+            this.name = name;
+        }
     }
 
     public abstract int getPrice();
+
+    private void checkName(String name) {
+        if (name == null)
+            throw new NullPointerException();
+        if (name.isEmpty())
+            throw new RuntimeException();
+    }
 
     public abstract boolean isSpecial();
 
@@ -32,5 +49,6 @@ public abstract class Product implements Searchable {
     public String getStringRepresentation() {
         return searchTerm() + " - " + searchType();
     }
+
 }
 
