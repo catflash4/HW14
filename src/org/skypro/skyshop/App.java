@@ -1,11 +1,14 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.searchable.Searchable;
+import org.skypro.skyshop.searchengine.SearchEngine;
 
+import java.util.Arrays;
 
 
 public class App {
@@ -15,30 +18,27 @@ public class App {
         Product cheese = new FixPriceProduct("Сыр Liebendorf");
         Product chips = new SimpleProduct("Чипсы Lays", 175);
         Product chocolate = new DiscountedProduct("Шоколад Алёнка", 80, 5);
+        Article sausageSecond = new Article("Колбаса <<Папа может>>", "Одна из тех колбас которая очень вкусная.");
+        Article sausageThird = new Article("Колбаса <<Сервелат>>", "Всегда её беру.");
 
-        ProductBasket basket = new ProductBasket();
-        basket.addProduct(milk);
-        basket.addProduct(sausage);
-        basket.addProduct(cheese);
-        basket.addProduct(chips);
-        basket.addProduct(chocolate);
+        SearchEngine searchables = new SearchEngine(10);
+        searchables.add(milk);
+        searchables.add(sausage);
+        searchables.add(cheese);
+        searchables.add(chocolate);
+        searchables.add(chips);
+        searchables.add(sausageSecond);
+        searchables.add(sausageThird);
 
-        System.out.println(basket);
+        System.out.println(Arrays.toString(searchables.search("Колбаса")));
 
-        System.out.println(basket.getTotalPrice() + " руб.");
-
-        System.out.println(basket.checkProductByName("Чипсы Lays"));
-
-        System.out.println(basket.checkProductByName("Шоколад Алёнка"));
-
-        basket.clear();
-
-        System.out.println(basket);
-
-        System.out.println(basket.getTotalPrice() + " руб.");
-
-        System.out.println(basket.checkProductByName("Шоколад Алёнка"));
-
-        System.out.println(basket.checkProductByName("Чипсы Lays"));
+        System.out.println();
+        Searchable[] searchingTmp;
+        searchingTmp = searchables.search("о");
+        for (Searchable s : searchingTmp) {
+            if (s != null) {
+                System.out.println(s.getStringRepresentation() + '\n');
+            }
+        }
     }
 }
