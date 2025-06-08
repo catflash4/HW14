@@ -6,6 +6,7 @@ import org.skypro.skyshop.searchable.Searchable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class SearchEngine {
     private final List<Searchable> searchableArray;
 
