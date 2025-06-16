@@ -10,20 +10,20 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.searchengine.SearchEngine;
 
-import java.util.List;
+import java.util.TreeMap;
 
 public class App {
     public static void main(String[] args) {
 
-        Product milk = new SimpleProduct(null, 0);
+        Product milk = new SimpleProduct("Село Зеленое", 90);
         System.out.println(milk);
-        Product sausage = new DiscountedProduct("", 0, 101);
+        Product sausage = new DiscountedProduct("Останкино", 120, 60);
         System.out.println(sausage);
-        Product cheese = new FixPriceProduct("Сыр Liebendorf");
+        Product cheese = new FixPriceProduct("Liebendorf");
         System.out.println(cheese);
-        Product chips = new SimpleProduct("Чипсы Lays", 175);
+        Product chips = new SimpleProduct("Lays", 175);
         System.out.println(chips);
-        Product chocolate = new DiscountedProduct("Шоколад Алёнка", 80, 5);
+        Product chocolate = new DiscountedProduct("Алёнка", 80, 5);
         System.out.println(chocolate);
         Article sausageSecond = new Article("Колбаса <<Папа может>>", "Одна из тех колбааааааааааааас которая очень вкусная.");
         System.out.println(sausageSecond);
@@ -31,11 +31,11 @@ public class App {
         System.out.println(sausageThird);
 
         ProductBasket basket = new ProductBasket();
-        basket.addProduct(milk);
-        basket.addProduct(sausage);
-        basket.addProduct(cheese);
-        basket.addProduct(chocolate);
-        basket.addProduct(chips);
+        basket.addProduct("Молоко", milk);
+        basket.addProduct("Сосиски", sausage);
+        basket.addProduct("Сыр", cheese);
+        basket.addProduct("Шоколад", chocolate);
+        basket.addProduct("Чипсы", chips);
 
         System.out.println();
         System.out.println("Корзина");
@@ -55,7 +55,7 @@ public class App {
         System.out.println(basket.removeByName("Абрикос"));
         System.out.println();
         basket.clear();
-        System.out.println(basket);
+        basket.printBasket();
 
         SearchEngine searchables = new SearchEngine();
 
@@ -67,7 +67,7 @@ public class App {
 
         System.out.println();
         try {
-            List<Searchable> searchingTmp = searchables.search("а");
+            TreeMap<String, Searchable> searchingTmp = searchables.search("а");
             System.out.println(searchingTmp);
         } catch (BestResultNotFoundException e) {
             System.out.println(e.getMessage());

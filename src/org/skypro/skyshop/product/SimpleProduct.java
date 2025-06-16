@@ -1,6 +1,9 @@
 package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.exceptions.IllegalPriceException;
+import org.skypro.skyshop.searchable.Searchable;
+
+import java.util.Objects;
 
 public class SimpleProduct extends Product {
     private final int price;
@@ -38,5 +41,23 @@ public class SimpleProduct extends Product {
     @Override
     public boolean isSpecial() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SimpleProduct that = (SimpleProduct) o;
+        return price == that.price;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), price);
+    }
+
+    @Override
+    public int compareTo(Searchable o) {
+        return this.searchTerm().compareTo(o.searchTerm());
     }
 }
