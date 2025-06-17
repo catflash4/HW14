@@ -2,7 +2,8 @@ package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.searchable.Searchable;
 
-public abstract class Product implements Searchable {
+
+public abstract class Product implements Searchable, Comparable<Searchable> {
     protected String name;
 
     Product(String name) throws RuntimeException {
@@ -53,6 +54,8 @@ public abstract class Product implements Searchable {
     public String getStringRepresentation() {
         return searchTerm() + " - " + searchType();
     }
+
+
 
 }
 
