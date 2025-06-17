@@ -5,7 +5,9 @@ import org.skypro.skyshop.searchable.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
+
 
 
 public class SearchEngine {
@@ -15,8 +17,8 @@ public class SearchEngine {
         this.searchableArray = new ArrayList<>();
     }
 
-    public TreeMap<String, Searchable> search(String substring) throws BestResultNotFoundException {
-        TreeMap<String, Searchable> searchArray = new TreeMap<>();
+    public Map<String, Searchable> search(String substring) throws BestResultNotFoundException {
+        Map<String, Searchable> searchArray = new TreeMap<>();
         for (Searchable s : searchableArray) {
             if (s != null && s.searchTerm().contains(substring)) {
                 searchArray.put(s.searchTerm(),s);

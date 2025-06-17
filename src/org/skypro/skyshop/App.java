@@ -10,7 +10,8 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.searchengine.SearchEngine;
 
-import java.util.TreeMap;
+import java.util.Map;
+
 
 public class App {
     public static void main(String[] args) {
@@ -67,7 +68,7 @@ public class App {
 
         System.out.println();
         try {
-            TreeMap<String, Searchable> searchingTmp = searchables.search("а");
+            Map<String, Searchable> searchingTmp = searchables.search("а");
             System.out.println(searchingTmp);
         } catch (BestResultNotFoundException e) {
             System.out.println(e.getMessage());

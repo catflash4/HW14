@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 public class ProductBasket {
-    Map<String, List<Product>> basket = new HashMap<>();
+    private final Map<String, List<Product>> basket = new HashMap<>();
 
     public void addProduct(String name, Product product) {
         basket.computeIfAbsent(name, k -> new ArrayList<>()).add(product);
@@ -50,23 +50,22 @@ public class ProductBasket {
     }
 
     public List<String> removeByName(String name) {
-        List<String> returning = new ArrayList<>();
         List<String> removingNames = new ArrayList<>();
         for (Map.Entry<String, List<Product>> e : basket.entrySet()) {
             if (e.getKey().contains(name)) {
                 removingNames.add(e.getKey());
                 for (Product p : e.getValue()) {
-                    returning.add(e.getKey() + " " + p.getName());
+                    removingNames.add(e.getKey() + " " + p.getName());
                 }
             }
         }
         for (String p : removingNames) {
             basket.remove(p);
         }
-        if (returning.isEmpty()) {
-            returning.add("Список пуст");
+        if (removingNames.isEmpty()) {
+            removingNames.add("Список пуст");
         }
-        return returning;
+        return removingNames;
     }
 }
 
