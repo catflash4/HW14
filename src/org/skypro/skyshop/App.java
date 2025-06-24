@@ -10,21 +10,21 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.searchable.Searchable;
 import org.skypro.skyshop.searchengine.SearchEngine;
 
-import java.util.Map;
+import java.util.Set;
 
 
 public class App {
     public static void main(String[] args) {
 
-        Product milk = new SimpleProduct("Село Зеленое", 90);
+        Product milk = new SimpleProduct("Молоко Село Зеленое", 90);
         System.out.println(milk);
-        Product sausage = new DiscountedProduct("Останкино", 120, 60);
+        Product sausage = new DiscountedProduct("Сосиски Останкино", 120, 60);
         System.out.println(sausage);
-        Product cheese = new FixPriceProduct("Liebendorf");
+        Product cheese = new FixPriceProduct("Сыр Liebendorf");
         System.out.println(cheese);
-        Product chips = new SimpleProduct("Lays", 175);
+        Product chips = new SimpleProduct("Чипсы Lays", 175);
         System.out.println(chips);
-        Product chocolate = new DiscountedProduct("Алёнка", 80, 5);
+        Product chocolate = new DiscountedProduct("Шоколад Алёнка", 80, 5);
         System.out.println(chocolate);
         Article sausageSecond = new Article("Колбаса <<Папа может>>", "Одна из тех колбааааааааааааас которая очень вкусная.");
         System.out.println(sausageSecond);
@@ -59,6 +59,13 @@ public class App {
         basket.printBasket();
 
         SearchEngine searchables = new SearchEngine();
+        searchables.add(milk);
+        searchables.add(sausage);
+        searchables.add(cheese);
+        searchables.add(chips);
+        searchables.add(chocolate);
+        searchables.add(sausageSecond);
+        searchables.add(sausageThird);
 
         try {
             System.out.println(searchables.search("Колбаса"));
@@ -68,7 +75,7 @@ public class App {
 
         System.out.println();
         try {
-            Map<String, Searchable> searchingTmp = searchables.search("а");
+            Set<Searchable> searchingTmp = searchables.search("а");
             System.out.println(searchingTmp);
         } catch (BestResultNotFoundException e) {
             System.out.println(e.getMessage());

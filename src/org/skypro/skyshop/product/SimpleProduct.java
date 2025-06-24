@@ -1,7 +1,6 @@
 package org.skypro.skyshop.product;
 
 import org.skypro.skyshop.exceptions.IllegalPriceException;
-import org.skypro.skyshop.searchable.Searchable;
 
 public class SimpleProduct extends Product {
     private final int price;
@@ -41,8 +40,4 @@ public class SimpleProduct extends Product {
         return false;
     }
 
-    @Override
-    public int compareTo(Searchable o) {
-        return this.searchTerm().compareTo(o.searchTerm());
-    }
 }
