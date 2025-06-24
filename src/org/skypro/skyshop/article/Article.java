@@ -2,7 +2,7 @@ package org.skypro.skyshop.article;
 
 import org.skypro.skyshop.searchable.Searchable;
 
-public class Article implements Searchable {
+public class Article implements Searchable, Comparable<Searchable> {
     private final String name;
     private final String text;
 
@@ -29,5 +29,10 @@ public class Article implements Searchable {
     @Override
     public String getStringRepresentation() {
         return searchTerm() + " - " + searchType();
+    }
+
+    @Override
+    public int compareTo(Searchable o) {
+        return this.searchTerm().compareTo(o.searchTerm());
     }
 }
