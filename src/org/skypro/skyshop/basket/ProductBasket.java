@@ -2,10 +2,8 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class ProductBasket {
@@ -16,29 +14,30 @@ public class ProductBasket {
     }
 
     public int getTotalPrice() {
-        int fullPrice = 0;
-        for (Map.Entry<String, List<Product>> e : basket.entrySet()) {
-            for (Product p : e.getValue()) {
-                fullPrice += p.getPrice();
-            }
-        }
-        return fullPrice;
+        return basket.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull)
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     public void printBasket() {
         if (!basket.isEmpty()) {
-            int specialCount = 0;
-            for (Map.Entry<String, List<Product>> e : basket.entrySet()) {
-                for (Product p : e.getValue()) {
-                    if (p != null && p.isSpecial()) {
-                        specialCount++;
-                    }
-                }
-            }
-            System.out.println(basket + "\nИтого: " + getTotalPrice() + " руб." + "\nСпециальных товаров: " + specialCount);
+            basket.values().stream()
+                    .flatMap(List::stream)
+                    .forEach(System.out::println);
+            System.out.println("Итого: " + getTotalPrice() + "руб." +
+                    "\nСпециальных товаров: " + getSpecialCount());
         } else {
             System.out.println("В корзине пусто");
         }
+    }
+
+    private int getSpecialCount() {
+        return (int) basket.values().stream()
+                .flatMap(List::stream)
+                .filter(Objects::nonNull).filter(Product::isSpecial)
+                .count();
     }
 
     public boolean checkProductByName(String name) {
@@ -50,22 +49,18 @@ public class ProductBasket {
     }
 
     public List<String> removeByName(String name) {
-        List<String> removingNames = new ArrayList<>();
-        for (Map.Entry<String, List<Product>> e : basket.entrySet()) {
-            if (e.getKey().contains(name)) {
-                removingNames.add(e.getKey());
-                for (Product p : e.getValue()) {
-                    removingNames.add(e.getKey() + " " + p.getName());
-                }
-            }
+        List<String> returning = basket.entrySet().stream()
+                .filter(e -> e.getKey().contains(name))
+                .flatMap(e -> e.getValue().stream()
+                        .map(p -> e.getKey() + " " + p.getName()))
+                .collect(Collectors.toList());
+
+        basket.keySet().removeIf(key -> key.contains(name));
+
+        if (returning.isEmpty()) {
+            returning.add("Список пуст");
         }
-        for (String p : removingNames) {
-            basket.remove(p);
-        }
-        if (removingNames.isEmpty()) {
-            removingNames.add("Список пуст");
-        }
-        return removingNames;
+        return returning;
     }
 }
 
